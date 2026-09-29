@@ -1,0 +1,23 @@
+version = 1
+revision = 3
+requires-python = ">=3.14"
+
+[[package]]
+name = "calculator"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "pysimplegui" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "pysimplegui", specifier = ">=6.3.0.1" }]
+
+[[package]]
+name = "pysimplegui"
+version = "6.3.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/99/58/bb2d530bfc597e1a86378b508a96bc57ff588af7b37ebd68fb4eec62a871/pysimplegui-6.3.0.1.tar.gz", hash = "sha256:d711ac856a8c03382ecc13e58468c8d6b02c580881fc4115c770691b0db680ea", size = 498434, upload-time = "2026-08-16T19:09:14.019Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/45/69/dcff3a6f9c8b411b967a56cf34eafac2d50a14d5ea4efa15e2aa774c28cf/pysimplegui-6.3.0.1-py3-none-any.whl", hash = "sha256:937da4ae6dd6a93b8239aefc76f717e1f4861d4fb64cd4e9b3a5df88865520a5", size = 494935, upload-time = "2026-08-16T19:09:12.644Z" },
+]

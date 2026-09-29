@@ -1,0 +1,19 @@
+[project]
+name = "calculator"
+version = "0.1.0"
+description = "Small calculator that also includes logarithmic and trigonometric functions."
+readme = "README.md"
+authors = [
+    { name = "giagozoglou-dim" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "pysimplegui>=6.3.0.1",
+]
+
+[project.scripts]
+simple-calculator = "calculator:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
