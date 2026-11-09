@@ -20,7 +20,7 @@ def calc_result(expression: str) -> int | float | str:
     """
     Calculates the result of the expression in the display.
     """
-    if expression.count(".") == 1 and not any(item in expression for item in TOGETHER):
+    if re.fullmatch(r"(?:\d+(?:\.\d*)?|\.\d+)", expression):
         ## Ensures that if the user presses "=" after entering a single decimal, the decimal doesn't get rounded.
         return float(expression)
     expression = force_multiplication(expression)

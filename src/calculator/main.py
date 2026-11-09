@@ -211,17 +211,24 @@ def main():
             display = window["-DISPLAY-"]
             assert display is not None
             expression = display.get()
-            for function in FUNCTIONS:
-                if expression.endswith(function + "("):
-                    expression = expression[: -(len(function) + 1)]
-                    break
-                if expression.endswith(function):
-                    expression = expression[: -len(function)]
-                    break
+            if expression in ERROR_MESSAGES:
+                expression = ""
             else:
-                expression = expression[:-1]
+                for function in FUNCTIONS:
+                    if expression.endswith(function + "("):
+                        expression = expression[: -(len(function) + 1)]
+                        break
+                    if expression.endswith(function):
+                        expression = expression[: -len(function)]
+                        break
+                else:
+                    expression = expression[:-1]
             update_display(window, expression)
         elif event == "-DISPLAY-":
+            if last_displayed_expression in ERROR_MESSAGES:
+                update_display(window, "")
+                last_displayed_expression = ""
+                continue
             if not saved_expression:
                 last_displayed_expression = saved_expression
                 continue
