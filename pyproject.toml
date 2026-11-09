@@ -1,6 +1,6 @@
 [project]
 name = "calculator"
-version = "0.1.0"
+version = "1.0.0"
 description = "Small calculator that also includes logarithmic and trigonometric functions."
 readme = "README.md"
 authors = [

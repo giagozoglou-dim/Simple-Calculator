@@ -27,7 +27,8 @@ uv run simple-calculator
 <h4>Without virtual environment:</h4>
 
 ```bash
-cd src/calculator # Make sure you're under src/calculator for this command to work!
+cd src/calculator # From the project's main directory
+# Or just navigate to the directory above using the file explorer
 uv run __main__.py
 ```
 
@@ -51,7 +52,6 @@ python -m simple-calculator
 <h4>Without virtual environment:</h4>
 
 ```bash
-pip install --break-system-packages # To install PySimpleGUI globally.
-# Alternatively, run pip install PySimpleGUI instead of the above command
+pip install PySimpleGUI
 python __main__.py # Make sure you're under src/calculator for this command to work!
 ```

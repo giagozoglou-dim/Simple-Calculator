@@ -4,105 +4,173 @@ from calculator import logic
 
 FUNCTIONS = ("sin", "cos", "tan", "log", "ln")
 OPERATORS = "+-*/√^"
+ERROR_MESSAGES = (
+    "Unknown error. View console.",
+    "Division by zero is undefined",
+    "0^0 is undefined",
+    "Square root of a negative number is undefined",
+)
+"""
+TODO:
+1. Add history feature.
+2. Add copy clipboard feature.
+3. Add setting to change whether degrees or radians are used.
+4. When an error occurs, render a pop-up window.
+"""
 
-def main_window(expanded_mode = False, saved_expression = ""):
+
+def main_window(expanded_mode=False, saved_expression=""):
     """
     Creates the main calculator window.
     """
-    sg.theme('DarkBlue3')
-    size = (4, 2)
+    sg.theme("DarkBlue3")
+    size = (10, 2)
     text = "Expand" if not expanded_mode else "Collapse"
     color = "orange" if not expanded_mode else "brown"
     layout = [
-        [sg.Input(
-            saved_expression, size=(35, 1), justification="right", key="-DISPLAY-",
-            background_color="white", font=("Helvetica", 20),
-            expand_x=True, enable_events=True
-        )],
-        [sg.Text("", size = (1, 4))],
-            [
-                sg.Button(text, key="-WIN_SIZE-", size=size, expand_x=True,
-                          expand_y=True, button_color=color),
-                sg.Button("AC", size=size, expand_x=True, expand_y=True,
-                          button_color="red"),
-                sg.Button("C", size=size, expand_x=True, expand_y=True,
-                          button_color="red"),
-                sg.Button("=", size=size, expand_x=True, expand_y=True,
-                          button_color="purple", bind_return_key=True)
-            ],
-            [
-                sg.Button("1", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("2", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("3", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("+", size=size, expand_x=True, expand_y=True,
-                          button_color="purple")
-            ],
-            [
-                sg.Button("4", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("5", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("6", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("-", size=size, expand_x=True, expand_y=True,
-                          button_color="purple")
-            ],
-            [
-                sg.Button("7", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("8", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("9", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("*", size=size, expand_x=True, expand_y=True,
-                          button_color="purple")
-            ],
-            [
-                sg.Button(".", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("0", size=size, expand_x=True, expand_y=True,
-                          button_color="blue"),
-                sg.Button("/", size=size, expand_x=True, expand_y=True,
-                          button_color="purple")
-            ]
+        [
+            sg.Input(
+                saved_expression,
+                size=(35, 1),
+                justification="right",
+                key="-DISPLAY-",
+                background_color="white",
+                font=("Helvetica", 20),
+                expand_x=True,
+                enable_events=True,
+            )
+        ],
+        [sg.Text("", size=(1, 4))],
+        [
+            sg.Button(
+                text,
+                key="-WIN_SIZE-",
+                size=size,
+                expand_x=True,
+                expand_y=True,
+                button_color=color,
+            ),
+            sg.Button(
+                "AC", size=size, expand_x=True, expand_y=True, button_color="red"
+            ),
+            sg.Button("C", size=size, expand_x=True, expand_y=True, button_color="red"),
+            sg.Button(
+                "=",
+                size=size,
+                expand_x=True,
+                expand_y=True,
+                button_color="purple",
+                bind_return_key=True,
+            ),
+        ],
+        [
+            sg.Button(
+                "1", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "2", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "3", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "+", size=size, expand_x=True, expand_y=True, button_color="purple"
+            ),
+        ],
+        [
+            sg.Button(
+                "4", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "5", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "6", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "-", size=size, expand_x=True, expand_y=True, button_color="purple"
+            ),
+        ],
+        [
+            sg.Button(
+                "7", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "8", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "9", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "*", size=size, expand_x=True, expand_y=True, button_color="purple"
+            ),
+        ],
+        [
+            sg.Button(
+                ".", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "0", size=size, expand_x=True, expand_y=True, button_color="blue"
+            ),
+            sg.Button(
+                "/", size=size, expand_x=True, expand_y=True, button_color="purple"
+            ),
+        ],
     ]
 
     if expanded_mode:
         color = "green"
-        layout.append([
-            sg.Button("(", size=size, expand_x=True, expand_y=True,
-                      button_color=color),
-            sg.Button(")", size=size, expand_x=True, expand_y=True,
-                      button_color=color),
-            sg.Button("π", size=size, expand_x=True, expand_y=True,
-                      button_color=color),
-            sg.Button("e", size=size, expand_x=True, expand_y=True,
-                      button_color=color)
-        ])
-        layout.append([
-            sg.Button("sin", size=size, expand_x=True, expand_y=True,
-                      button_color=color),
-            sg.Button("cos", size=size, expand_x=True, expand_y=True,
-                      button_color=color),
-            sg.Button("tan", size=size, expand_x=True, expand_y=True,
-                      button_color=color),
-            sg.Button("^", size=size, expand_x=True, expand_y=True,
-                      button_color=color)
-        ])
-        layout.append([
-            sg.Button("log", size=size, expand_x=True, expand_y=True,
-                      button_color=color),
-            sg.Button("ln", size=size, expand_x=True, expand_y=True,
-                      button_color=color),
-            sg.Button("√", size=size, expand_x=True, expand_y=True,
-                      button_color=color)
-        ])
+        layout.append(
+            [
+                sg.Button(
+                    "(", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+                sg.Button(
+                    ")", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+                sg.Button(
+                    "^", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+                sg.Button(
+                    "e", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+            ]
+        )
+        layout.append(
+            [
+                sg.Button(
+                    "sin", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+                sg.Button(
+                    "cos", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+                sg.Button(
+                    "tan", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+                sg.Button(
+                    "π", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+            ]
+        )
+        layout.append(
+            [
+                sg.Button(
+                    "log", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+                sg.Button(
+                    "ln", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+                sg.Button(
+                    "√", size=size, expand_x=True, expand_y=True, button_color=color
+                ),
+            ]
+        )
 
-    new_window = sg.Window("Calculator", layout, size = (500, 500), resizable = True, finalize = True)
+    new_window = sg.Window(
+        "Calculator", layout, size=(500, 500), resizable=True, finalize=True
+    )
     return new_window
+
 
 def update_display(window, text):
     """
@@ -112,6 +180,7 @@ def update_display(window, text):
     assert display is not None
     display.update(value=text)
 
+
 def main():
     """
     Main function to run the calculator application.
@@ -120,6 +189,7 @@ def main():
     window = main_window()
     window.bind("<KP_Enter>", "NumpadEnter")
     window.set_min_size((500, 500))
+    last_displayed_expression = ""
     while True:
         event, values = window.read()
         if event == sg.WINDOW_CLOSED:
@@ -128,7 +198,9 @@ def main():
         if event == "-WIN_SIZE-":
             window.close()
             expanded_mode = not expanded_mode
-            window = main_window(expanded_mode=expanded_mode, saved_expression=saved_expression)
+            window = main_window(
+                expanded_mode=expanded_mode, saved_expression=saved_expression
+            )
             if expanded_mode:
                 window.set_min_size((500, 700))
             else:
@@ -136,13 +208,30 @@ def main():
         elif event == "AC":
             update_display(window, "")
         elif event == "C":
-            update_display(window, saved_expression[:-1])
+            display = window["-DISPLAY-"]
+            assert display is not None
+            expression = display.get()
+            for function in FUNCTIONS:
+                if expression.endswith(function + "("):
+                    expression = expression[: -(len(function) + 1)]
+                    break
+                if expression.endswith(function):
+                    expression = expression[: -len(function)]
+                    break
+            else:
+                expression = expression[:-1]
+            update_display(window, expression)
         elif event == "-DISPLAY-":
             if not saved_expression:
+                last_displayed_expression = saved_expression
                 continue
             new_character = saved_expression[-1] if saved_expression else ""
-            filtered_input = logic.filter_user_input(
-                logic.ensure_proper_input(saved_expression[:-1], new_character))
+            if len(saved_expression) < len(last_displayed_expression):
+                filtered_input = logic.filter_user_input(saved_expression)
+            else:
+                filtered_input = logic.filter_user_input(
+                    logic.ensure_proper_input(saved_expression[:-1], new_character)
+                )
             if "=" in filtered_input:
                 filtered_input = filtered_input.replace("=", "")
                 calculated_result = logic.calc_result(filtered_input)
@@ -156,4 +245,7 @@ def main():
         else:
             new_expression = logic.ensure_proper_input(saved_expression, event)
             update_display(window, new_expression)
+        display = window["-DISPLAY-"]
+        assert display is not None
+        last_displayed_expression = display.get()
     window.close()
